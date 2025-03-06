@@ -78,12 +78,13 @@
             font-size: 1rem;
             background-color: #2e2e2e;
             color: #fff;
-            padding: 20px;
+            padding: 60px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            width: calc(100% - 150px);
+            margin: 20px auto;
             overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            white-space: pre-wrap; /* Preserve line breaks for markdown */
+            white-space: pre-wrap;
         }
 
         /* New wrapper to display file info without extra whitespace breaks */
@@ -225,9 +226,10 @@
         fetch('posts/' + filename)
             .then(response => response.text())
             .then(markdown => {
+                // Configure marked.js to respect line breaks
                 marked.setOptions({
-                    breaks: true, 
-                    gfm: true 
+                    breaks: true, // Enable single newline breaks
+                    gfm: true // GitHub Flavored Markdown compatibility
                 });
 
                 const currentDomain = window.location.origin;

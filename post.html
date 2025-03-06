@@ -207,15 +207,8 @@
         const postContentDiv = document.getElementById('post-content');
         document.title = title + ' | 890.blog';
         postContentDiv.innerHTML = `
-          <div class="file-info">
-            <p><strong>File:</strong> ${filename}</p>
-          </div>
-          <div class="button-container">
-            <button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button>
-            <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
-          </div>
-          <div class="reader-content"></div>
-        `;
+      <div class="file-info"><p><strong>File:</strong> ${filename}</p><button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button><button class="tor-btn" onclick="viewOnTor()">View on Tor</button></div><div class="reader-content"></div>
+   <div class="reader-content"></div>`.trim();
         fetch('posts/' + filename)
             .then(response => response.text())
             .then(markdown => {

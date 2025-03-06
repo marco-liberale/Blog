@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>890.blog</title>
   <style>
-    /* Basic Reset */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
@@ -25,7 +24,6 @@
       padding: 10px;
     }
 
-    /* Hyperlink styles */
     a:link {
       color: #ffffff;
     }
@@ -38,7 +36,6 @@
       width: 100%;
     }
 
-    /* Navigation Menu */
     .menu {
       display: flex;
       flex-wrap: wrap;
@@ -62,7 +59,6 @@
       text-decoration: underline;
     }
 
-    /* Responsive Logo */
     .logo-space img {
       max-height: 180px;
       width: auto;
@@ -70,7 +66,6 @@
       max-width: 150%;
     }
 
-    /* Button styles */
     .donate-btn {
       background-color: #fff86b;
       color: #000 !important;
@@ -88,7 +83,7 @@
     }
 
     .tor-btn {
-      background-color: #59316b;
+      background-color: #7D4698;
       color: #fff;
       padding: 8px 12px;
       text-decoration: none;
@@ -99,10 +94,9 @@
     }
 
     .tor-btn:hover {
-      background-color: #4a285e;
+      background-color: #59316B;
     }
 
-    /* Terminal Styling */
     .terminal {
       font-family: monospace;
       font-size: 1rem;
@@ -213,7 +207,6 @@
     <a class="donate-btn" href="https://donate.ml.codes" target="_blank">Donate ❤️</a>
   </nav>
 
-  <!-- Terminal-like Intro Text -->
   <div class="terminal">
     <div class="terminal-header">
       Welcome to<br>
@@ -229,10 +222,8 @@
       Personal_Email = Marco [æŧ] marcoliberale [đøŧ] com<br><br>
       Your Privacy is my top priority: <a href="/privacy.html" target="_blank">Read the Privacy Policy</a><br><br>
       Raw_articles = <a href="https://github.com/890-blog" target="_blank">github.com/890-blog</a><span class="cursor">|</span>
-
     </div>
   </div>
-
 
   <div class="tor-button-container">
     <a href="http://yvuhndruu2h3vxgg25hfqlnsew4xm32iaugdvqxapwwt5rulrokr25yd.onion/" target="_blank" class="tor-btn">
@@ -271,22 +262,18 @@
 </div>
 
 <script>
-  // Fetch the list of posts
   fetch('posts.json')
           .then(res => res.json())
           .then(data => {
             const postsContainer = document.getElementById('posts');
 
             data.posts.forEach(post => {
-              // Split post using ~CUT~ separator
               const parts = post.split('~CUT~');
               const filename = parts[0];
               const description = parts[1] || '';
               const title = parts[2] || filename.replace('.md', '');
               const image = parts[3] || null;
 
-              // Create the post element
-              // Update the URL to only include the filename
               const postLink = document.createElement('a');
               postLink.href = 'post.html?post=' + encodeURIComponent(filename);
               postLink.style.textDecoration = 'none';
@@ -294,7 +281,6 @@
               const postDiv = document.createElement('div');
               postDiv.classList.add('post');
 
-              // Add optional header image
               if (image) {
                 const img = document.createElement('img');
                 img.src = image;

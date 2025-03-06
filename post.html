@@ -47,55 +47,6 @@
             margin-bottom: 20px;
         }
 
-        .menu a,<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Post | 890.blog</title>
-    <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            font-family: monospace, sans-serif;
-            background-color: #1e1f27;
-            color: #fff;
-            line-height: 1.6;
-            width: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
-            padding: 10px;
-        }
-
-        a:link {
-            color: #ffffff;
-        }
-
-        a:visited {
-            color: #cccccc;
-        }
-
-        .container {
-            width: 100%;
-        }
-
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: center;
-            background-color: #2a2b33;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
         .menu a,
         .menu .logo-space {
             color: #fff;
@@ -132,7 +83,12 @@
             margin-bottom: 20px;
             overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            white-space: pre-wrap; 
+            white-space: pre-wrap; /* Preserve line breaks for markdown */
+        }
+
+        /* New wrapper to display file info without extra whitespace breaks */
+        .file-info {
+            white-space: normal;
         }
 
         h1 {
@@ -148,7 +104,6 @@
             border-radius: 3px;
             font-weight: bold;
             display: inline-block;
-            margin: 20px 5px;
             cursor: pointer;
             border: none;
             transition: background-color 0.2s ease, transform 0.2s ease;
@@ -167,7 +122,6 @@
             border-radius: 3px;
             font-weight: bold;
             display: inline-block;
-            margin: 20px 5px;
             cursor: pointer;
             border: none;
             transition: background-color 0.2s ease, transform 0.2s ease;
@@ -176,6 +130,20 @@
         .tor-btn:hover {
             background-color: #59316B;
             transform: scale(1.05);
+        }
+
+        .file-info {
+            white-space: normal;
+            margin-bottom: 1px;
+        }
+        .file-info p {
+            margin: 0;
+            padding: 0;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 1px;
         }
     </style>
 </head>
@@ -245,16 +213,23 @@
         const postContentDiv = document.getElementById('post-content');
         document.title = title + ' | 890.blog';
         postContentDiv.innerHTML = `
-          <p><strong>File:</strong> ${filename}</p>
-          ${image ? `<img src="${image}" alt="${title}" style="max-width:100%;border-radius:10px;margin-top:20px;" />` : ''}
-          <p id="description">${description}</p>
-          <button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button>
-          <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
-        `;
+  <div class="file-info">
+    <p><strong>File:</strong> ${filename}</p>
+  </div>
+  <div class="button-container">
+    <button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button>
+    <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
+  </div>
+`;
 
         fetch('posts/' + filename)
             .then(response => response.text())
             .then(markdown => {
+                marked.setOptions({
+                    breaks: true, 
+                    gfm: true 
+                });
+
                 const currentDomain = window.location.origin;
                 const updatedMarkdown = markdown.replace(/~URL~/g, currentDomain);
 
@@ -274,220 +249,7 @@
         document.getElementById('post-content').innerHTML = `
           <h1>Error</h1>
           <p>No post was specified in the URL.</p>
-        `;
-    }
-
-    function downloadMarkdown() {
-        if (!window.loadedMarkdown) {
-            alert('Post content not loaded yet!');
-            return;
-        }
-
-        const description = document.getElementById('description')?.textContent || '';
-        const copyrightNotice =
-            '\n\n---\n\n[890.blog](https://890.blog/) by [Marco Liberale](https://ml.codes) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).';
-        const markdownContent = `${description}\n\n${window.loadedMarkdown}${copyrightNotice}`;
-
-        const blob = new Blob([markdownContent], { type: 'text/markdown' });
-        const url = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = postFilename;
-        document.body.appendChild(link);
-        link.click();
-
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    }
-
-    function viewOnTor() {
-        const onionDomain = "yvuhndruu2h3vxgg25hfqlnsew4xm32iaugdvqxapwwt5rulrokr25yd.onion";
-        const currentPath = window.location.pathname + window.location.search;
-        const torUrl = `http://${onionDomain}${currentPath}`;
-        window.open(torUrl, "_blank");
-    }
-</script>
-</body>
-</html>
-
-        .menu .logo-space {
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-            font-size: 0.9rem;
-        }
-
-        .menu a:hover {
-            text-decoration: underline;
-        }
-
-        .logo-space img {
-            max-height: 180px;
-            width: auto;
-            height: auto;
-            max-width: 150%;
-        }
-
-        footer {
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid rgb(90, 240, 110);
-            margin-top: 30px;
-        }
-
-        .reader {
-            font-family: monospace, sans-serif;
-            font-size: 1rem;
-            background-color: #2e2e2e;
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow-y: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .download-md-btn {
-            background-color: #1e90ff;
-            color: #fff;
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 3px;
-            font-weight: bold;
-            display: inline-block;
-            margin: 20px 5px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .download-md-btn:hover {
-            background-color: #1c86e2;
-            transform: scale(1.05);
-        }
-
-        .tor-btn {
-            background-color: #7D4698;
-            color: #fff;
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 3px;
-            font-weight: bold;
-            display: inline-block;
-            margin: 20px 5px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .tor-btn:hover {
-            background-color: #59316B;
-            transform: scale(1.05);
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <nav class="menu">
-        <a href="https://ml.codes" target="_blank">My Links</a>
-        <a href="https://libertycanary.ml.codes" target="_blank">Canary</a>
-        <div class="logo-space">
-            <a href="index.html">
-                <img src="890.png" alt="890 logo" />
-            </a>
-        </div>
-        <a href="http://6u6rpls7ztob2pzgysxmh2t2zgsv7fiutac3eft2qpbzq76wxmxqcvyd.onion/" target="_blank">Canary (TOR)</a>
-        <a class="donate-btn" href="https://donate.ml.codes" target="_blank">Donate ❤️</a>
-    </nav>
-
-    <div id="post-content" class="reader">
-        <h1>Loading Post...</h1>
-        <p>Please wait while the content is being loaded.</p>
-    </div>
-    <noscript>
-        <style>
-            .noscript-banner {
-                background-color: #ffdddd;
-                border: 1px solid #ff4444;
-                color: #800000;
-                padding: 15px;
-                text-align: center;
-                font-size: 1rem;
-                font-family: Arial, sans-serif;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 1000;
-            }
-        </style>
-        <div class="noscript-banner">
-            JavaScript is required to properly view this website. Please enable JavaScript in your browser settings.<br>
-            Alternatively, you can browse the posts directly <a href="/posts/" style="color: #800000; text-decoration: underline">here</a>.
-        </div>
-    </noscript>
-    <footer>
-        This Blog is Proudly <strong>FOSS</strong>
-        <a href="https://github.com/marco-liberale/Blog" target="_blank"><strong>View on GitHub</strong></a>.
-    </footer>
-</div>
-
-<script src="./marked.min.js"></script>
-<script>
-    function getQueryParam(param) {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        return urlSearchParams.get(param);
-    }
-
-    const postParam = getQueryParam('post');
-    let postFilename = 'post.md';
-    if (postParam) {
-        const parts = decodeURIComponent(postParam).split('~CUT~');
-        const filename = parts[0] || 'Unknown Post';
-        postFilename = filename;
-        const description = parts[1] || '';
-        const title = parts[2] || filename.replace('.md', '');
-        const image = parts[3] || null;
-
-        const postContentDiv = document.getElementById('post-content');
-        document.title = title + ' | 890.blog';
-        postContentDiv.innerHTML = `
-          <p><strong>File:</strong> ${filename}</p>
-          ${image ? `<img src="${image}" alt="${title}" style="max-width:100%;border-radius:10px;margin-top:20px;" />` : ''}
-          <p id="description">${description}</p>
-          <button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button>
-          <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
-        `;
-
-        fetch('posts/' + filename)
-            .then(response => response.text())
-            .then(markdown => {
-                const currentDomain = window.location.origin;
-                const updatedMarkdown = markdown.replace(/~URL~/g, currentDomain);
-
-                const markdownElement = document.createElement('div');
-                markdownElement.id = 'markdown-content';
-                markdownElement.innerHTML = marked.parse(updatedMarkdown);
-                postContentDiv.appendChild(markdownElement);
-
-                window.loadedMarkdown = updatedMarkdown;
-            })
-            .catch(error => {
-                const errorElement = document.createElement('p');
-                errorElement.textContent = 'Error loading post content: ' + error.message;
-                postContentDiv.appendChild(errorElement);
-            });
-    } else {
-        document.getElementById('post-content').innerHTML = `
-          <h1>Error</h1>
-          <p>No post was specified in the URL.</p>
-        `;
+      `;
     }
 
     function downloadMarkdown() {

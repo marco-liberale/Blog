@@ -1,6 +1,16 @@
 {
   "posts": [
-    "post1.md~CUT~Description 1~CUT~Title 1",
-    "post2.md~CUT~Description 2~CUT~Title 2"
+    {
+      "filename": "post1.md",
+      "description": "Description 1",
+      "title": "Title 1",
+      "image": null
+    },
+    {
+      "filename": "post2.md",
+      "description": "Description 2",
+      "title": "Title 2",
+      "image": null
+    }
   ]
 }

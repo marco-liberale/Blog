@@ -295,11 +295,7 @@
             const postsContainer = document.getElementById('posts');
 
             data.posts.forEach(post => {
-              const parts = post.split('~CUT~');
-              const filename = parts[0];
-              const description = parts[1] || '';
-              const title = parts[2] || filename.replace('.md', '');
-              const image = parts[3] || null;
+              const { filename, description, title, image } = post;
 
               const postLink = document.createElement('a');
               postLink.href = 'post.html?post=' + encodeURIComponent(filename);
@@ -335,6 +331,7 @@
             });
           })
           .catch(err => console.error('Error fetching posts:', err));
+
 </script>
 </body>
 </html>

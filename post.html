@@ -83,6 +83,7 @@
         .reader-content {
             transform: scale(0.9);
             transform-origin: top center;
+            white-space: pre-wrap;
             margin-bottom: 0;
         }
         .file-info {
@@ -241,8 +242,8 @@
                 // Clear the "Loading Post..." message
                 readerContentDiv.innerHTML = '';
 
+                updatedMarkdown = markdown.replace(/\n{3,}/g, "\n\n");
                 const currentDomain = window.location.origin;
-                const updatedMarkdown = markdown.replace(/~URL~/g, currentDomain);
 
                 const markdownElement = document.createElement('div');
                 markdownElement.id = 'markdown-content';

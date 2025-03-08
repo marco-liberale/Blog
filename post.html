@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- This file is subject to the terms of the GNU Affero General Public License (AGPL). -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -68,18 +70,20 @@
             font-size: 1.3rem;
             background-color: #2e2e2e;
             color: #fff;
-            padding: 60px;
+            padding: 10px; /* Reduced padding */
             border-radius: 10px;
             width: calc(100% - 100px);
             max-width: 1000px;
-            margin: 20px auto;
+            margin: 0 auto; /* Removed vertical margin */
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            white-space: pre-wrap;
+            white-space: none;
         }
+
         .reader-content {
             transform: scale(0.9);
             transform-origin: top center;
+            margin-bottom: 0;
         }
         .file-info {
             white-space: normal;
@@ -91,7 +95,8 @@
         .download-md-btn {
             background-color: #1e90ff;
             color: #fff;
-            padding: 8px 12px;
+            padding: 5px 8px; /* Reduced padding */
+            font-size: 0.8rem; /* Smaller font size */
             text-decoration: none;
             border-radius: 3px;
             font-weight: bold;
@@ -107,7 +112,8 @@
         .tor-btn {
             background-color: #7d4698;
             color: #fff;
-            padding: 8px 12px;
+            padding: 5px 8px; /* Reduced padding */
+            font-size: 0.8rem; /* Smaller font size */
             text-decoration: none;
             border-radius: 3px;
             font-weight: bold;
@@ -130,9 +136,12 @@
         }
         .button-container {
             display: flex;
-            gap: 10px;
-            margin-top: 1px;
+            gap: 5px;
+            margin: 0; /* Removed margin */
+            justify-content: flex-start;
         }
+
+
         img {
             max-width: 100%; /* Ensures the image does not exceed the width of its container */
             height: auto; /* Maintains the aspect ratio of the image */
@@ -167,6 +176,11 @@
         <a class="donate-btn" href="https://donate.ml.codes" target="_blank">Donate ❤️</a>
     </nav>
     <div id="post-content" class="reader">
+        <!-- Button container moved to the top -->
+        <div class="button-container">
+            <button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button>
+            <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
+        </div>
         <div class="reader-content">
             <h1>Loading Post...</h1>
             <p>Please wait while the content is being loaded.</p>
@@ -195,6 +209,7 @@
         </div>
     </noscript>
     <footer>
+        <a href="https://890.blog/" target="_blank">890.blog</a> by <a href="https://ml.codes" target="_blank">Marco Liberale</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>.
         This Blog is Proudly <strong>FOSS</strong>
         <a href="https://github.com/marco-liberale/Blog" target="_blank"><strong>View on GitHub</strong></a>.
     </footer>

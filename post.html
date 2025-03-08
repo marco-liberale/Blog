@@ -195,46 +195,51 @@
         const urlSearchParams = new URLSearchParams(window.location.search);
         return urlSearchParams.get(param);
     }
+
     const postParam = getQueryParam('post');
     let postFilename = 'post.md';
+
     if (postParam) {
-        const parts = decodeURIComponent(postParam).split('~CUT~');
-        const filename = parts[0] || 'Unknown Post';
-        postFilename = filename;
-        const description = parts[1] || '';
-        const title = parts[2] || filename.replace('.md', '');
-        const image = parts[3] || null;
+        postFilename = decodeURIComponent(postParam);
+
         const postContentDiv = document.getElementById('post-content');
-        document.title = title + ' | 890.blog';
-        postContentDiv.innerHTML = `
-      <div class="file-info"><p><strong>File:</strong> ${filename}</p><button class="download-md-btn" onclick="downloadMarkdown()">Download Markdown</button><button class="tor-btn" onclick="viewOnTor()">View on Tor</button></div><div class="reader-content"></div>
-   <div class="reader-content"></div>`.trim();
-        fetch('posts/' + filename)
+        const readerContentDiv = postContentDiv.querySelector('.reader-content');
+
+        fetch('posts/' + postFilename)
             .then(response => response.text())
             .then(markdown => {
                 marked.setOptions({
                     breaks: true,
                     gfm: true
                 });
+
+                // Clear the "Loading Post..." message
+                readerContentDiv.innerHTML = '';
+
                 const currentDomain = window.location.origin;
                 const updatedMarkdown = markdown.replace(/~URL~/g, currentDomain);
+
                 const markdownElement = document.createElement('div');
                 markdownElement.id = 'markdown-content';
                 markdownElement.innerHTML = marked.parse(updatedMarkdown);
-                postContentDiv.querySelector('.reader-content').appendChild(markdownElement);
+
+                readerContentDiv.appendChild(markdownElement);
                 window.loadedMarkdown = updatedMarkdown;
             })
             .catch(error => {
+                // Clear the "Loading Post..." message and show an error
+                readerContentDiv.innerHTML = '';
                 const errorElement = document.createElement('p');
                 errorElement.textContent = 'Error loading post content: ' + error.message;
-                postContentDiv.querySelector('.reader-content').appendChild(errorElement);
+                readerContentDiv.appendChild(errorElement);
             });
     } else {
         document.getElementById('post-content').innerHTML = `
-          <h1>Error</h1>
-          <p>No post was specified in the URL.</p>
-        `;
+        <h1>Error</h1>
+        <p>No post was specified in the URL.</p>
+    `;
     }
+
     function downloadMarkdown() {
         if (!window.loadedMarkdown) {
             alert('Post content not loaded yet!');
@@ -253,12 +258,14 @@
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
     }
+
     function viewOnTor() {
         const onionDomain = 'yvuhndruu2h3vxgg25hfqlnsew4xm32iaugdvqxapwwt5rulrokr25yd.onion';
         const currentPath = window.location.pathname + window.location.search;
         const torUrl = `http://${onionDomain}${currentPath}`;
         window.open(torUrl, '_blank');
     }
+
 </script>
 </body>
 </html>

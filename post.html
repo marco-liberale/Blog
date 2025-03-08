@@ -133,12 +133,22 @@
             gap: 10px;
             margin-top: 1px;
         }
+        img {
+            max-width: 100%; /* Ensures the image does not exceed the width of its container */
+            height: auto; /* Maintains the aspect ratio of the image */
+            display: block; /* Prevents inline spacing issues */
+        }
         @media (max-width: 768px) {
             .reader {
                 width: 100%;
                 padding: 20px 10px;
                 margin: 20px 0;
                 border-radius: 0;
+            }
+
+            .reader img {
+                max-width: 100%; /* Ensures images fit within the reader container */
+                height: auto; /* Maintains aspect ratio */
             }
         }
     </style>

@@ -1,278 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>890.blog</title>
-  <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            font-family: monospace, sans-serif;
+            background-color: #1e1f27;
+            color: #fff;
+            line-height: 1.6;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            padding: 10px;
+        }
+        a:link {
+            color: #ffffff;
+        }
+        a:visited {
+            color: #cccccc;
+        }
+        .container {
+            width: 100%;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #2a2b33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .menu a,
+        .menu .logo-space {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        .logo-space img {
+            max-height: 180px;
+            width: auto;
+            height: auto;
+            max-width: 150%;
+        }
+        footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgb(90, 240, 110);
+            margin-top: 30px;
+        }
+        .reader {
+            font-family: "Helvetica", serif;
+            font-size: 1.3rem;
+            background-color: #2e2e2e;
+            color: #fff;
+            padding: 10px; /* Reduced padding */
+            border-radius: 10px;
+            width: calc(100% - 100px);
+            max-width: 1000px;
+            margin: 0 auto; /* Removed vertical margin */
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            white-space: none;
+        }
 
-    html, body {
-      font-family: monospace, sans-serif;
-      background-color: #1e1f27;
-      color: #fff;
-      line-height: 1.6;
-      width: 100%;
-      overflow-x: hidden;
-    }
+        .reader-content {
+            transform: scale(0.9);
+            transform-origin: top center;
+            white-space: pre-wrap;
+            margin-bottom: 0;
+        }
+        .file-info {
+            white-space: normal;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .download-md-btn {
+            background-color: #1e90ff;
+            color: #fff;
+            padding: 5px 8px; /* Reduced padding */
+            font-size: 0.8rem; /* Smaller font size */
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .download-md-btn:hover {
+            background-color: #1c86e2;
+            transform: scale(1.05);
+        }
+        .tor-btn {
+            background-color: #7d4698;
+            color: #fff;
+            padding: 5px 8px; /* Reduced padding */
+            font-size: 0.8rem; /* Smaller font size */
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .tor-btn:hover {
+            background-color: #59316b;
+            transform: scale(1.05);
+        }
+        .file-info {
+            white-space: normal;
+            margin-bottom: 1px;
+        }
+        .file-info p {
+            margin: 0;
+            padding: 0;
+        }
+        .button-container {
+            display: flex;
+            gap: 5px;
+            margin: 0; /* Removed margin */
+            justify-content: flex-start;
+        }
 
-    body {
-      padding: 10px;
-    }
 
-    a:link {
-      color: #ffffff;
-    }
+        img {
+            max-width: 100%; /* Ensures the image does not exceed the width of its container */
+            height: auto; /* Maintains the aspect ratio of the image */
+            display: block; /* Prevents inline spacing issues */
+        }
+        @media (max-width: 768px) {
+            .reader {
+                width: 100%;
+                padding: 20px 10px;
+                margin: 20px 0;
+                border-radius: 0;
+            }
 
-    a:visited {
-      color: #cccccc;
-    }
-
-    .container {
-      width: 100%;
-    }
-
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: center;
-      background-color: #2a2b33;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-
-    .menu a,
-    .menu .logo-space {
-      color: #fff;
-      text-decoration: none;
-      padding: 5px 10px;
-      font-size: 0.9rem;
-    }
-
-    .menu a:hover {
-      text-decoration: underline;
-    }
-
-    .logo-space img {
-      max-height: 180px;
-      width: auto;
-      height: auto;
-      max-width: 150%;
-    }
-
-    .donate-btn {
-      background-color: #fff86b;
-      color: #000 !important;
-      padding: 8px 12px;
-      text-decoration: none;
-      border-radius: 3px;
-      font-weight: bold;
-      display: inline-block;
-      margin: 5px;
-    }
-
-    .donate-btn:hover {
-      background-color: #ffe55c;
-      color: #000 !important;
-    }
-
-    .tor-btn {
-      background-color: #7D4698;
-      color: #fff;
-      padding: 8px 12px;
-      text-decoration: none;
-      border-radius: 3px;
-      font-weight: bold;
-      display: inline-block;
-      margin: 5px auto;
-    }
-
-    .tor-btn:hover {
-      background-color: #59316B;
-    }
-
-    .terminal {
-      font-family: monospace;
-      font-size: 1rem;
-      background-color: #2e2e2e;
-      color: #80ff80;
-      padding: 20px 20px 8px 20px;
-      margin: 20px auto;
-      border-radius: 10px;
-      text-align: left;
-      line-height: 1.6;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      max-width: 800px;
-    }
-
-    .terminal-header {
-      font-size: 1.5rem;
-      text-align: center !important;
-      margin-bottom: 15px;
-      white-space: normal;
-    }
-
-    .terminal-body {
-      white-space: pre-wrap;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      animation: blink 1s step-start infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    .tor-button-container {
-      text-align: center;
-      margin: 20px auto;
-    }
-
-    .intro-text {
-      padding: 20px;
-      text-align: center;
-      font-size: 1.1rem;
-      color: #dcdcdc;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .posts {
-      width: 100%;
-      margin-bottom: 30px;
-    }
-
-    .post {
-      margin: 20px 0;
-      padding: 15px;
-      background-color: #2a2b33;
-      border: 2px solid rgb(90, 240, 110);
-      border-radius: 8px;
-      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .post:hover {
-      background-color: #262a33;
-      transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .post img {
-      width: 100%;
-      object-fit: contain;
-      margin-bottom: 1px;
-      border-radius: 1px;
-    }
-
-    .post-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    .post-description {
-      font-size: 1rem;
-      color: #b0b0b0;
-      margin-top: 8px;
-    }
-
-    .img-container {
-      width: 100%;
-      height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      background-color: #2a2b33;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .img-container img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .img-container img {
-      max-height: 100%;
-      width: auto;
-      object-fit: contain;
-      border-radius: 5px;
-    }
-    @media (max-width: 480px) {
-      .img-container {
-        height: 150px;
-      }
-    }
-    footer {
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid rgb(90, 240, 110);
-      margin-top: 30px;
-    }
-  </style>
+            .reader img {
+                max-width: 100%; /* Ensures images fit within the reader container */
+                height: auto; /* Maintains aspect ratio */
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-  <nav class="menu">
-    <a href="https://ml.codes" target="_blank">My Links</a>
-    <a href="https://libertycanary.ml.codes" target="_blank">Canary</a>
-    <div class="logo-space">
-      <a href="index.html">
-        <img src="890.png" alt="890 logo" />
-      </a>
+    <nav class="menu">
+        <a href="https://ml.codes" target="_blank">My Links</a>
+        <a href="https://libertycanary.ml.codes" target="_blank">Canary</a>
+        <div class="logo-space">
+            <a href="index.html">
+                <img src="890.png" alt="890 logo" />
+            </a>
+        </div>
+        <a href="http://6u6rpls7ztob2pzgysxmh2t2zgsv7fiutac3eft2qpbzq76wxmxqcvyd.onion/" target="_blank">Canary (TOR)</a>
+        <a class="donate-btn" href="https://donate.ml.codes" target="_blank">Donate ❤️</a>
+    </nav>
+    <div id="post-content" class="reader">
+        <!-- Button container moved to the top -->
+        <div class="button-container">
+            <a class="download-md-btn" href="/posts/{{ filename }}" download>Download Markdown</a>
+            <button class="tor-btn" onclick="viewOnTor()">View on Tor</button>
+            
+        </div>
+        <div class="CC0">
+            <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
+                <img src="/CC0.svg" alt="CC0 Public Domain" style="width: 100px; height: auto; margin: 10px 0;"> </a>
+        <div class="reader-content">
+            <div>{{ content }}</div>
+        </div>
     </div>
-    <a href="http://6u6rpls7ztob2pzgysxmh2t2zgsv7fiutac3eft2qpbzq76wxmxqcvyd.onion/" target="_blank">Canary (TOR)</a>
-    <a class="donate-btn" href="https://donate.ml.codes" target="_blank">Donate ❤️</a>
-  </nav>
-
-  <div class="terminal">
-    <div class="terminal-header">
-      Welcome to<br>
-      890 Blog :)
-    </div>
-    <div class="terminal-body">
-      ┌──(marco@liberale)-[~]<br>
-      └─$ Made By Marco Liberale :)<br><br>
-      ┌──(marco@liberale)-[~]<br>
-      └─$ Delivering the Latest in Cyber Security<br><br>
-      ┌──(marco@liberale)-[~]<br>
-      └─$ Email = Social [æŧ] marcoliberale [đøŧ] com<br><br>
-      Personal_Email = Marco [æŧ] marcoliberale [đøŧ] com<br><br>
-      Your Privacy is my top priority: <a href="/privacy.html" target="_blank">Read the Privacy Policy</a><br><br>
-      Raw_articles = <a href="https://github.com/890-blog" target="_blank">github.com/890-blog</a><span class="cursor">|</span>
-    </div>
-  </div>
-
-  <div class="tor-button-container">
-    <a href="http://yvuhndruu2h3vxgg25hfqlnsew4xm32iaugdvqxapwwt5rulrokr25yd.onion/" target="_blank" class="tor-btn">
-      View this site on TOR
-    </a>
+    <footer style="max-width: 600px; margin: 0 auto; text-align: center;">
+        © Marco Liberale, <strong>no</strong> rights reserved. <br></br><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
+            <img src="/CC0.svg" alt="CC0 Public Domain" style="width: 100px; height: auto; margin: 10px 0;">
+        </a>
+        <br></br>  
+        Content is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0 (Public Domain)</a>. 
+        You are free to use, modify, and distribute it for any purpose without attribution (though appreciated). 
+        Site code is licensed under the <a href="https://github.com/marco-liberale/Blog/blob/main/LICENSE" target="_blank">AGPL</a>. 
+        <br><strong>Proudly FOSS</strong> — <a href="https://github.com/marco-liberale/Blog" target="_blank"><strong>View on GitHub</strong></a>.
+    </footer>
 </div>
-       
-         <div id="posts" class="posts">
-           {{ posts }}
-</div>
-       
-<footer style="max-width: 600px; margin: 0 auto; text-align: center;">
-    © Marco Liberale, <strong>no</strong> rights reserved. <br></br><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
-        <img src="/CC0.svg" alt="CC0 Public Domain" style="width: 100px; height: auto; margin: 10px 0;">
-    </a>
-    <br></br>  
-    Content is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0 (Public Domain)</a>. 
-    You are free to use, modify, and distribute it for any purpose without attribution (though appreciated). 
-    Site code is licensed under the <a href="https://github.com/marco-liberale/Blog/blob/main/LICENSE" target="_blank">AGPL</a>. 
-    <br><strong>Proudly FOSS</strong> — <a href="https://github.com/marco-liberale/Blog" target="_blank"><strong>View on GitHub</strong></a>.
-</footer>
-
-</div>
+<script>
+    function viewOnTor() {
+        const onionDomain = 'yvuhndruu2h3vxgg25hfqlnsew4xm32iaugdvqxapwwt5rulrokr25yd.onion';
+        const currentPath = window.location.pathname + window.location.search;
+        const torUrl = `http://${onionDomain}${currentPath}`;
+        window.open(torUrl, '_blank');
+    }
+</script>
 </body>
 </html>
